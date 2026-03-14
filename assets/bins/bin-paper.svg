@@ -1,0 +1,22 @@
+<svg width="240" height="280" viewBox="0 0 240 280" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="paperBody" x1="120" y1="44" x2="120" y2="248" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F7E8C9"/>
+      <stop offset="1" stop-color="#E3CEA3"/>
+    </linearGradient>
+    <filter id="paperShadow" x="22" y="20" width="196" height="244" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="16" stdDeviation="9" flood-color="#6F5A33" flood-opacity="0.26"/>
+    </filter>
+  </defs>
+  <g filter="url(#paperShadow)">
+    <rect x="34" y="50" width="172" height="198" rx="30" fill="url(#paperBody)"/>
+    <rect x="26" y="32" width="188" height="28" rx="12" fill="#CB9E57"/>
+    <rect x="64" y="86" width="112" height="114" rx="24" fill="#FFF9EE" stroke="#D0B07C" stroke-width="2"/>
+    <rect x="98" y="108" width="44" height="56" rx="6" fill="#E7CA94" stroke="#BA9056" stroke-width="2"/>
+    <path d="M106 123H134" stroke="#8F6A3A" stroke-width="3" stroke-linecap="round"/>
+    <path d="M106 136H134" stroke="#8F6A3A" stroke-width="3" stroke-linecap="round"/>
+    <path d="M106 149H127" stroke="#8F6A3A" stroke-width="3" stroke-linecap="round"/>
+    <rect x="82" y="210" width="76" height="22" rx="11" fill="#B2864A"/>
+    <text x="120" y="225" text-anchor="middle" fill="#FFF8EA" font-size="11" font-family="Arial, sans-serif" font-weight="700">PAPER</text>
+  </g>
+</svg>
