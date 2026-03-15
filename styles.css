@@ -870,9 +870,8 @@ body {
     right: var(--phone-gap);
     top: calc(var(--phone-gap) + var(--phone-topbar-h) + var(--phone-gap));
     bottom: max(var(--phone-gap), env(safe-area-inset-bottom));
-    grid-template-rows: max-content minmax(220px, 1fr);
-    gap: 0.28rem;
-    align-content: start;
+    grid-template-rows: minmax(0, 1fr) minmax(182px, 37vh);
+    gap: 0.34rem;
   }
 
   .panel-ribbon {
@@ -881,10 +880,8 @@ body {
 
   .stage-panel {
     min-height: 0;
-    padding: 0.56rem;
-    gap: 0.24rem;
-    grid-template-rows: auto auto;
-    align-content: start;
+    padding: 0.5rem;
+    gap: 0.3rem;
   }
 
   .state {
@@ -898,9 +895,7 @@ body {
   }
 
   #playingState.state {
-    min-height: auto;
-    padding-top: 0.28rem;
-    gap: 0.2rem;
+    padding-top: 0.34rem;
   }
 
   .bins-grid {
@@ -911,7 +906,7 @@ body {
   .trash-toolbar {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 0.25rem;
-    margin-bottom: 0.15rem;
+    margin-bottom: 0.22rem;
   }
 
   .trash-counter,
@@ -922,7 +917,7 @@ body {
 
   .trash-grid {
     grid-template-columns: 1fr;
-    gap: 0.14rem;
+    gap: 0.2rem;
   }
 
   .trash-item {
@@ -947,35 +942,35 @@ body {
   }
 
   .trash-item.current-trash {
-    min-height: 156px;
-    padding: 0.44rem 0.36rem;
+    min-height: 142px;
+    padding: 0.4rem 0.34rem;
   }
 
   .trash-item.current-trash img {
-    width: min(92px, 17vh);
+    width: min(82px, 16vh);
   }
 
   .trash-item.current-trash span {
-    font-size: 0.8rem;
+    font-size: 0.76rem;
   }
 
   .trash-item.current-trash small {
-    font-size: 0.6rem;
+    font-size: 0.58rem;
     line-height: 1.16;
   }
 
   .bin-btn {
-    min-height: 160px;
-    padding: 0.44rem 0.2rem 0.5rem;
+    min-height: 146px;
+    padding: 0.42rem 0.2rem 0.46rem;
     border-radius: 0.72rem;
   }
 
   .bin-btn img {
-    width: min(100%, 72px);
+    width: min(100%, 66px);
   }
 
   .bin-btn span {
-    font-size: 0.74rem;
+    font-size: 0.7rem;
     line-height: 1;
   }
 
@@ -992,8 +987,8 @@ body {
     width: 100%;
     max-width: none;
     margin: 0;
-    padding: 0.56rem 0.38rem;
-    gap: 0.3rem;
+    padding: 0.48rem 0.36rem;
+    gap: 0.22rem;
     position: relative;
     left: auto;
     right: auto;
@@ -1007,8 +1002,8 @@ body {
   }
 
   .feedback {
-    min-height: 0.9rem;
-    font-size: 0.82rem;
+    min-height: 1.1rem;
+    font-size: 0.9rem;
   }
 
   .summary-grid {
@@ -1036,20 +1031,20 @@ body {
 
   .board {
     top: calc(var(--phone-gap) + var(--phone-topbar-h) + var(--phone-gap));
-    grid-template-rows: max-content minmax(206px, 1fr);
+    grid-template-rows: minmax(0, 1fr) minmax(172px, 38vh);
   }
 
   .bin-btn {
-    min-height: 148px;
+    min-height: 136px;
     padding-inline: 0.14rem;
   }
 
   .bin-btn img {
-    width: min(100%, 68px);
+    width: min(100%, 62px);
   }
 
   .bin-btn span {
-    font-size: 0.68rem;
+    font-size: 0.64rem;
     letter-spacing: -0.01em;
   }
 
