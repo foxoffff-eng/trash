@@ -870,7 +870,7 @@ body {
     right: var(--phone-gap);
     top: calc(var(--phone-gap) + var(--phone-topbar-h) + var(--phone-gap));
     bottom: max(var(--phone-gap), env(safe-area-inset-bottom));
-    grid-template-rows: max-content minmax(220px, 1fr);
+    grid-template-rows: max-content minmax(340px, 1fr);
     gap: 0.28rem;
     align-content: start;
   }
@@ -881,7 +881,7 @@ body {
 
   .stage-panel {
     min-height: 0;
-    padding: 0.56rem;
+    padding: 0.72rem;
     gap: 0.24rem;
     grid-template-rows: auto auto;
     align-content: start;
@@ -947,35 +947,35 @@ body {
   }
 
   .trash-item.current-trash {
-    min-height: 156px;
-    padding: 0.44rem 0.36rem;
+    min-height: 280px;
+    padding: 0.68rem 0.58rem;
   }
 
   .trash-item.current-trash img {
-    width: min(92px, 17vh);
+    width: min(170px, 28vh);
   }
 
   .trash-item.current-trash span {
-    font-size: 0.8rem;
+    font-size: 1.3rem;
   }
 
   .trash-item.current-trash small {
-    font-size: 0.6rem;
+    font-size: 0.92rem;
     line-height: 1.16;
   }
 
   .bin-btn {
-    min-height: 160px;
-    padding: 0.44rem 0.2rem 0.5rem;
+    min-height: 260px;
+    padding: 0.8rem 0.36rem 0.88rem;
     border-radius: 0.72rem;
   }
 
   .bin-btn img {
-    width: min(100%, 72px);
+    width: min(100%, 118px);
   }
 
   .bin-btn span {
-    font-size: 0.74rem;
+    font-size: 1.1rem;
     line-height: 1;
   }
 
@@ -992,8 +992,8 @@ body {
     width: 100%;
     max-width: none;
     margin: 0;
-    padding: 0.56rem 0.38rem;
-    gap: 0.3rem;
+    padding: 1.02rem 0.64rem;
+    gap: 0.56rem;
     position: relative;
     left: auto;
     right: auto;
@@ -1007,8 +1007,8 @@ body {
   }
 
   .feedback {
-    min-height: 0.9rem;
-    font-size: 0.82rem;
+    min-height: 1.3rem;
+    font-size: 1rem;
   }
 
   .summary-grid {
@@ -1036,20 +1036,20 @@ body {
 
   .board {
     top: calc(var(--phone-gap) + var(--phone-topbar-h) + var(--phone-gap));
-    grid-template-rows: max-content minmax(206px, 1fr);
+    grid-template-rows: max-content minmax(300px, 1fr);
   }
 
   .bin-btn {
-    min-height: 148px;
+    min-height: 220px;
     padding-inline: 0.14rem;
   }
 
   .bin-btn img {
-    width: min(100%, 68px);
+    width: min(100%, 96px);
   }
 
   .bin-btn span {
-    font-size: 0.68rem;
+    font-size: 0.92rem;
     letter-spacing: -0.01em;
   }
 
