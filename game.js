@@ -398,11 +398,7 @@ async function preloadAndReady() {
     await preloadAssets([...itemPaths, ...BIN_ASSETS]);
 
     state.status = "ready";
-    setVisibleState("idle");
-    updateHud();
-    pushFeedback("");
-    els.startBtn.disabled = false;
-    els.startBtn.textContent = "Начать раунд";
+    startRound();
   } catch (error) {
     state.status = "error";
     setVisibleState("error");
