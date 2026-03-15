@@ -870,10 +870,10 @@ body {
     right: var(--phone-gap);
     top: calc(var(--phone-gap) + var(--phone-topbar-h) + var(--phone-gap));
     bottom: max(var(--phone-gap), env(safe-area-inset-bottom));
-    grid-template-rows: max-content minmax(520px, 1fr);
-    gap: 0.28rem;
+    grid-template-rows: max-content minmax(0, 1fr);
+    gap: 0.24rem;
     align-content: start;
-    overflow-y: auto;
+    overflow: hidden;
   }
 
   .panel-ribbon {
@@ -882,16 +882,16 @@ body {
 
   .stage-panel {
     min-height: 0;
-    padding: 0.92rem;
-    gap: 0.24rem;
+    padding: 0.52rem;
+    gap: 0.16rem;
     grid-template-rows: auto auto;
     align-content: start;
   }
 
   .state {
-    padding: 0.44rem;
+    padding: 0.36rem;
     border-radius: 0.95rem;
-    gap: 0.42rem;
+    gap: 0.24rem;
   }
 
   .state p {
@@ -900,30 +900,32 @@ body {
 
   #playingState.state {
     min-height: auto;
-    padding-top: 0.28rem;
-    gap: 0.2rem;
+    padding-top: 0.12rem;
+    gap: 0.12rem;
+    place-content: start;
+    justify-items: stretch;
   }
 
   .bins-grid {
-    grid-template-columns: repeat(5, minmax(0, 1fr));
-    gap: 0.36rem;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.32rem;
   }
 
   .trash-toolbar {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 0.25rem;
-    margin-bottom: 0.15rem;
+    margin-bottom: 0.08rem;
   }
 
   .trash-counter,
   .selected-hint {
-    font-size: 0.63rem;
-    padding: 0.28rem 0.32rem;
+    font-size: 0.58rem;
+    padding: 0.24rem 0.28rem;
   }
 
   .trash-grid {
     grid-template-columns: 1fr;
-    gap: 0.14rem;
+    gap: 0.08rem;
   }
 
   .trash-item {
@@ -948,35 +950,35 @@ body {
   }
 
   .trash-item.current-trash {
-    min-height: 468px;
-    padding: 1rem 0.86rem;
+    min-height: 188px;
+    padding: 0.42rem 0.34rem;
   }
 
   .trash-item.current-trash img {
-    width: min(248px, 38vh);
+    width: min(112px, 20vh);
   }
 
   .trash-item.current-trash span {
-    font-size: 1.95rem;
+    font-size: 0.96rem;
   }
 
   .trash-item.current-trash small {
-    font-size: 1.22rem;
+    font-size: 0.66rem;
     line-height: 1.16;
   }
 
   .bin-btn {
-    min-height: 420px;
-    padding: 1.2rem 0.55rem 1.28rem;
+    min-height: 184px;
+    padding: 0.5rem 0.26rem 0.54rem;
     border-radius: 0.72rem;
   }
 
   .bin-btn img {
-    width: min(100%, 182px);
+    width: min(100%, 82px);
   }
 
   .bin-btn span {
-    font-size: 1.68rem;
+    font-size: 0.8rem;
     line-height: 1;
   }
 
@@ -993,8 +995,8 @@ body {
     width: 100%;
     max-width: none;
     margin: 0;
-    padding: 1.48rem 0.92rem;
-    gap: 0.88rem;
+    padding: 0.58rem 0.44rem;
+    gap: 0.34rem;
     position: relative;
     left: auto;
     right: auto;
@@ -1008,8 +1010,8 @@ body {
   }
 
   .feedback {
-    min-height: 1.8rem;
-    font-size: 1.3rem;
+    min-height: 0.76rem;
+    font-size: 0.74rem;
   }
 
   .summary-grid {
@@ -1037,20 +1039,20 @@ body {
 
   .board {
     top: calc(var(--phone-gap) + var(--phone-topbar-h) + var(--phone-gap));
-    grid-template-rows: max-content minmax(460px, 1fr);
+    grid-template-rows: max-content minmax(0, 1fr);
   }
 
   .bin-btn {
-    min-height: 360px;
+    min-height: 160px;
     padding-inline: 0.14rem;
   }
 
   .bin-btn img {
-    width: min(100%, 146px);
+    width: min(100%, 72px);
   }
 
   .bin-btn span {
-    font-size: 1.34rem;
+    font-size: 0.72rem;
     letter-spacing: -0.01em;
   }
 
