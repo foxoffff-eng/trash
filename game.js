@@ -113,7 +113,6 @@ const TRASH_ITEMS = [
     image: "assets/items/organic-wilted-flowers.svg"
   }
 ];
-
 const BIN_ASSETS = [
   "assets/bins/bin-glass.svg",
   "assets/bins/bin-paper.svg",
@@ -122,8 +121,7 @@ const BIN_ASSETS = [
   "assets/bins/bin-metal.svg"
 ];
 
-const COMPLETION_PROMPT_TEXT =
-  "\u041d\u0430\u0439\u0434\u0438\u0442\u0435 \u0440\u0430\u0437\u043d\u0438\u0446\u0443 \u043c\u0435\u0436\u0434\u0443 \u0432\u0440\u0435\u043c\u0435\u043d\u0435\u043c \u0440\u0430\u0437\u043b\u043e\u0436\u0435\u043d\u0438\u044f \u0430\u043b\u044e\u043c\u0438\u043d\u0438\u0435\u0432\u043e\u0439 \u0431\u0430\u043d\u043a\u0438 \u0438 \u0447\u0438\u0441\u043b\u043e\u043c 83.";
+const COMPLETION_PROMPT_TEXT = "Найдите разницу между временем разложения алюминиевой банки и числом 83.";
 
 const state = {
   status: "loading",
@@ -133,8 +131,7 @@ const state = {
   lives: 3,
   sortedCount: 0,
   correctCount: 0,
-  items: [],
-  selectedItemId: null
+  items: []
 };
 
 const els = {
@@ -186,6 +183,10 @@ function getRemainingItems() {
   return state.items.filter((item) => !item.sorted);
 }
 
+function getCurrentItem() {
+  return state.items.find((item) => !item.sorted) || null;
+}
+
 function updateHud() {
   els.scoreValue.textContent = String(state.score);
   els.comboValue.textContent = String(state.combo);
@@ -198,12 +199,13 @@ function updateTrashCounter() {
 }
 
 function updateSelectedHint() {
-  const selected = state.items.find((item) => item.id === state.selectedItemId && !item.sorted);
-  if (!selected) {
-    els.selectedHint.textContent = "Выберите предмет кликом или перетащите сразу.";
+  const currentItem = getCurrentItem();
+  if (!currentItem) {
+    els.selectedHint.textContent = "Все предметы отсортированы.";
     return;
   }
-  els.selectedHint.textContent = `Выбран предмет: ${selected.name}. Теперь нажмите на контейнер.`;
+
+  els.selectedHint.textContent = `Текущий предмет: ${currentItem.name}. Выберите подходящий контейнер снизу.`;
 }
 
 function pushFeedback(text, mode = "") {
@@ -219,6 +221,7 @@ function flashBin(category, success) {
   if (!targetBin) {
     return;
   }
+
   targetBin.classList.remove("correct-hit", "wrong-hit");
   targetBin.classList.add(success ? "correct-hit" : "wrong-hit");
   window.setTimeout(() => {
@@ -227,31 +230,31 @@ function flashBin(category, success) {
 }
 
 function renderTrashGrid() {
-  const fragment = document.createDocumentFragment();
-  const remainingItems = getRemainingItems();
-
-  remainingItems.forEach((item) => {
-    const card = document.createElement("button");
-    card.type = "button";
-    card.className = "trash-item";
-    if (item.id === state.selectedItemId) {
-      card.classList.add("selected");
-    }
-    card.dataset.itemId = item.id;
-    card.draggable = true;
-    card.setAttribute("aria-label", `Мусор: ${item.name}`);
-
-    card.innerHTML = `
-      <img src="${item.image}" alt="${item.name}" width="120" height="120" />
-      <span>${item.name}</span>
-      <small>${item.hint}</small>
-    `;
-
-    fragment.append(card);
-  });
-
+  const currentItem = getCurrentItem();
   els.trashGrid.innerHTML = "";
-  els.trashGrid.append(fragment);
+
+  if (!currentItem) {
+    return;
+  }
+
+  const card = document.createElement("article");
+  card.className = "trash-item current-trash";
+  card.setAttribute("aria-label", `Мусор: ${currentItem.name}`);
+
+  card.innerHTML =
+    '<img src="' +
+    currentItem.image +
+    '" alt="' +
+    currentItem.name +
+    '" width="180" height="180" />' +
+    "<span>" +
+    currentItem.name +
+    "</span>" +
+    "<small>" +
+    currentItem.hint +
+    "</small>";
+
+  els.trashGrid.append(card);
 }
 
 function finishGame(reason, isCompleted = false) {
@@ -261,6 +264,7 @@ function finishGame(reason, isCompleted = false) {
   els.startBtn.disabled = false;
   els.startBtn.textContent = "Начать заново";
   els.gameOverReason.textContent = reason;
+
   if (isCompleted) {
     els.completionPrompt.textContent = COMPLETION_PROMPT_TEXT;
     els.completionPrompt.classList.remove("hidden");
@@ -268,23 +272,18 @@ function finishGame(reason, isCompleted = false) {
     els.completionPrompt.textContent = "";
     els.completionPrompt.classList.add("hidden");
   }
+
   pushFeedback("");
 }
 
-function findActiveItemById(itemId) {
-  return state.items.find((item) => item.id === itemId && !item.sorted);
-}
-
-function processChoice(selectedCategory, explicitItemId = null) {
+function processChoice(selectedCategory) {
   if (state.status !== "playing") {
     return;
   }
 
-  const itemId = explicitItemId || state.selectedItemId;
-  const item = findActiveItemById(itemId);
-
+  const item = getCurrentItem();
   if (!item) {
-    pushFeedback("Сначала выберите предмет из списка.", "bad");
+    finishGame("Все предметы отсортированы.", true);
     return;
   }
 
@@ -297,17 +296,16 @@ function processChoice(selectedCategory, explicitItemId = null) {
     state.maxCombo = Math.max(state.maxCombo, state.combo);
     state.score += 10 + state.combo * 2;
     item.sorted = true;
-    if (state.selectedItemId === item.id) {
-      state.selectedItemId = null;
-    }
-    pushFeedback(`Верно: "${item.name}" отсортирован в "${CATEGORIES[item.category].label}".`, "ok");
+
+    pushFeedback(`Верно: \"${item.name}\" отправлен в \"${CATEGORIES[item.category].label}\".`, "ok");
     flashBin(selectedCategory, true);
   } else {
     state.combo = 0;
     state.lives -= 1;
     state.score = Math.max(0, state.score - 6);
+
     pushFeedback(
-      `Неверно. "${item.name}" нужно отправить в контейнер "${CATEGORIES[item.category].label.toLowerCase()}".`,
+      `Неверно. \"${item.name}\" нужно отправить в \"${CATEGORIES[item.category].label}\".`,
       "bad"
     );
     flashBin(selectedCategory, false);
@@ -336,7 +334,6 @@ function startRound() {
   state.lives = 3;
   state.sortedCount = 0;
   state.correctCount = 0;
-  state.selectedItemId = null;
   state.items = shuffle(TRASH_ITEMS).map((item) => ({ ...item, sorted: false }));
 
   setVisibleState("playing");
@@ -344,7 +341,7 @@ function startRound() {
   updateTrashCounter();
   updateSelectedHint();
   renderTrashGrid();
-  pushFeedback("Сортируйте весь набор предметов по контейнерам.");
+  pushFeedback("Сортируйте предметы по очереди: выбирайте контейнер снизу.");
 
   els.startBtn.disabled = true;
   els.startBtn.textContent = "Раунд идёт";
@@ -362,45 +359,13 @@ function bindControls() {
 
   els.bins.forEach((button) => {
     button.addEventListener("click", () => processChoice(button.dataset.category));
-    button.addEventListener("dragover", (event) => {
-      if (state.status === "playing") {
-        event.preventDefault();
-      }
-    });
-    button.addEventListener("drop", (event) => {
-      event.preventDefault();
-      if (state.status !== "playing") {
-        return;
-      }
-      const itemId = event.dataTransfer.getData("text/plain");
-      processChoice(button.dataset.category, itemId);
-    });
-  });
-
-  els.trashGrid.addEventListener("click", (event) => {
-    const card = event.target.closest(".trash-item");
-    if (!card || state.status !== "playing") {
-      return;
-    }
-    state.selectedItemId = card.dataset.itemId;
-    updateSelectedHint();
-    renderTrashGrid();
-  });
-
-  els.trashGrid.addEventListener("dragstart", (event) => {
-    const card = event.target.closest(".trash-item");
-    if (!card || state.status !== "playing") {
-      event.preventDefault();
-      return;
-    }
-    event.dataTransfer.effectAllowed = "move";
-    event.dataTransfer.setData("text/plain", card.dataset.itemId);
   });
 
   document.addEventListener("keydown", (event) => {
     if (state.status !== "playing") {
       return;
     }
+
     const category = Object.keys(CATEGORIES).find((key) => CATEGORIES[key].key === event.key);
     if (category) {
       processChoice(category);
@@ -418,19 +383,20 @@ function preloadAssets(paths) {
         img.src = path;
       })
   );
+
   return Promise.all(jobs);
 }
 
 async function preloadAndReady() {
   state.status = "loading";
   setVisibleState("loading");
-  state.selectedItemId = null;
   els.startBtn.disabled = true;
   els.startBtn.textContent = "Загрузка...";
 
   try {
     const itemPaths = TRASH_ITEMS.map((item) => item.image);
     await preloadAssets([...itemPaths, ...BIN_ASSETS]);
+
     state.status = "ready";
     setVisibleState("idle");
     updateHud();
